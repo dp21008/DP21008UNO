@@ -53,6 +53,14 @@ def gauss(coeficientes, constantes):
     # Crear matriz extendida coeficientes|constantes
     ecuaciones = np.hstack([coeficientes, constantes.reshape(-1, 1)])
     for i in range(n):
+        # Verificar si el pivote es cero y cambiar filas si es necesario
+        if ecuaciones[i, i] == 0:
+            for j in range(i + 1, n):
+                if ecuaciones[j, i] != 0:
+                    ecuaciones[[i, j]] = ecuaciones[[j, i]]  # Intercambio de filas
+                    break
+            else:
+                raise ValueError(f"No se puede continuar, pivote en posición ({i}, {i}) es cero.")
         # Dividir fila [i] entre el pivote
         ecuaciones[i] = ecuaciones[i] / ecuaciones[i, i]
         for j in range(n):
@@ -86,6 +94,14 @@ def gauss_jordan(coeficientes, constantes):
     # Crear matriz extendida coeficientes|constantes
     ecuaciones = np.hstack([coeficientes, constantes.reshape(-1, 1)])
     for i in range(n):
+        # Verificar si el pivote es cero y cambiar filas si es necesario
+        if ecuaciones[i, i] == 0:
+            for j in range(i + 1, n):
+                if ecuaciones[j, i] != 0:
+                    ecuaciones[[i, j]] = ecuaciones[[j, i]]  # Intercambio de filas
+                    break
+            else:
+                raise ValueError(f"No se puede continuar, pivote en posición ({i}, {i}) es cero.")
         # Dividir fila [i] entre el pivote
         ecuaciones[i] = ecuaciones[i] / ecuaciones[i, i]
         for j in range(n):
